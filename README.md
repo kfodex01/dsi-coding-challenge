@@ -120,7 +120,7 @@ GET /cities?like=Des Moines
 
 should yield this
 
-```json
+```
 {
   "cities": [
     {
@@ -174,7 +174,7 @@ GET /cities?like=des&latitude=41.85003&longitude=-87.65005
 
 should yield something like
 
-```json
+```
 {
   "cities": [
     {
