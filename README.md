@@ -3,22 +3,22 @@ Pioneer Coding Challenge
 
 Thank you for considering Pioneer! This challenge is meant to be the next step in our interview process, after the phone screen you just passed (yay!) It will hopefully offer you a chance to showcase your skills and experience before the scheduled in-person interview where we'll ask you quite a few things about your solutions, in addition to the usual interview-y things. Bring your laptop!
 
-Please fork this repo and place your solutions, in the form of a single repo, in your GitHub account. [Provide us](TODO:add_email) a link when you're done.
+Please fork this repo and place your solutions, as a single repo, in your GitHub account. [Provide us](TODO:add_email) a link when you're done.
 
 We hope that the requirements are clear but please [email us](TODO:add_email) in case you need any clarification.
 
 Requirements
 ------------
 
-Try to work through many of these parts as time and comfort permit. However, and at a bare minimum, we'd like to see you to complete the first three.
+At a bare minimum, we'd like to see you to complete the first three parts but please work through the remaining as time and comfort permit.
 
-All parts involve a single-endpoint RESTful API exposed at `/cities`. Your API should allow its clients to search through the data in `data/canada_usa_cities.tsv` which contains a big list of cities in the United States and Canada. It should return _at most_ 25 matches based on simple search criteria. Content-type should be `application/json` with the appropriate HTTP status code. Your assessment of a malformed request and how you handle other edge/test-cases is entirely up to you.
+You'll be designing a RESTful API that allows its clients to search through the datafile at `data/canada_usa_cities.tsv` in this repository which contains a big list of cities in the United States and Canada. All parts entail a single-endpoint exposed at `/cities`.  It should return _at most_ 25 matches based on simple search criteria. Content-type should be `application/json` with the appropriate HTTP status code. Your assessment of a malformed request and how you handle other edge/test/unusual-cases is entirely up to you.
 
 ### Part One - Simplicity Itself
 
 Save your solution in a folder named `part_one` in your repo.
 
-Your API only searches for exact matches under the `name` field in the datafile.
+Your API _only_ searches for _exact_ matches under the `name` field in the datafile.
 
 ```
 GET /cities/Des Moines
@@ -77,7 +77,7 @@ should yield this
 }
 ```
 
-Again: How you handle cities _not_ in the dataset is up to you. How you handle requests to the collection `cities` is up to you.
+Again: How you handle cities _not_ in the dataset is up to you. How you handle requests to the bare collection `cities` is up to you.
 
 ### Part Two - Getting Fuzzy
 
@@ -110,7 +110,7 @@ should yield this
 
 ### Part Three - Where _are_ we?
 
-You should know where to save this in your repo.
+You should know how and where to save this in your repo.
 
 This
 
@@ -157,7 +157,7 @@ In this iteration, your solution should
 
 * Present _up to 25 cities_ that fuzzy-match the `like` parameter.
 * If `latitude` and `longitude` are specified, should find the 'closest' matches to this location.
-* Whether or not `latitude` and `longitude` are provided, should display a 'relevance score', between 0.00 and 1.00 (inclusive) up to two places of decimal (two places always), based on some assessment of the results in a new `score` field in the results.
+* Whether or not `latitude` and `longitude` are provided, should display a 'relevance score', between 0.00 and 1.00 (inclusive) up to two places of decimal (two places always), based on some assessment of the results in a new `score` field for each entity in the `cities` list.
 
 Relevance (the `score` field) is a function of a minimum of one or a maximum of two factors:
 
@@ -166,7 +166,7 @@ Relevance (the `score` field) is a function of a minimum of one or a maximum of 
 
 That's the definition. How you weight them and determine a scoring algorithm is up to you. Be prepared to explain it. Doesn't have to be super fancy :)
 
-Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago. This is a decent balance between proximity and similarity (at least I think so... prove me wrong!)
+Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago. Here's a sample result with a decent balance between proximity and similarity (or at least I think so... do better and explain your work!)
 
 ```
 GET /cities?like=des&latitude=41.85003&longitude=-87.65005
@@ -285,8 +285,8 @@ Nothing left field here. Like every other software shop, we love good
 * Packaging and deployment practices
 * Your own creativity/secret sauce
 
-We value simplicity, readability/maintainability, and testability. We also understand that 'elegant' solutions might not be optimal. Whatever you do, please be prepared to explain your design choices and accept and offer critique gracefully. We're all in this to learn and be better.
+We value simplicity, readability/maintainability, and testability. We also understand that 'elegant' solutions might not be optimal and vice-versa. Whatever you do, please be prepared to explain your design choices and accept and offer critique gracefully and with respect. We're all in this to learn and become better.
 
-Ultimately, we're a research company that is very interested in _how you think of data and unleash its utility to solve our problems_ with your creativity and skillset.
+Ultimately, we're a research company that is very interested in _how you think about data_ and how you're able to _unleash its utility to solve our problems_ with your creativity and skillset.
 
 Good luck, and thank you for your time! Code away!
