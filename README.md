@@ -3,7 +3,7 @@ Pioneer Coding Challenge
 
 Thank you for considering Pioneer! This challenge is meant to be the next step in our interview process, after the phone screen you just passed (yay!) It will hopefully offer you a chance to showcase your skills and experience before the scheduled in-person interview where we'll ask you quite a few things about your solutions, in addition to the usual interview-y things. Bring your laptop!
 
-Please fork this repo and place your solutions, in the form of a single repo, in your GitHub account. Provide [email us](TODO:add_email) a link when you're done.
+Please fork this repo and place your solutions, in the form of a single repo, in your GitHub account. [Provide us](TODO:add_email) a link when you're done.
 
 We hope that the requirements are clear but please [email us](TODO:add_email) in case you need any clarification.
 
