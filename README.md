@@ -285,8 +285,8 @@ Nothing left field here. Like every other software shop, we love good
 * Packaging and deployment practices
 * Your own creativity/secret sauce
 
-We value simplicity, readability/maintainability, and testability. We also understand that 'elegant' solutions might not be optimal. Whatever you do, please be prepared to explain your design choices and accept critique gracefully. We're in this to learn.
+We value simplicity, readability/maintainability, and testability. We also understand that 'elegant' solutions might not be optimal. Whatever you do, please be prepared to explain your design choices and accept and offer critique gracefully. We're all in this to learn and be better.
 
-Ultimately, we're a research company that is very interested in _how you think of data and unleash its utility to solve our problems_.
+Ultimately, we're a research company that is very interested in _how you think of data and unleash its utility to solve our problems_ with your creativity and skillset.
 
 Good luck, and thank you for your time! Code away!
