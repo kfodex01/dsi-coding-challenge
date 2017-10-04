@@ -153,20 +153,20 @@ Here are all the query params that your endpoint should accept. Feel free to add
 | `latitude`  | Only if `longitude` specified. Ignore if specific resource name is provided. |
 | `longitude` | Only if `latitude` specified. Ignore if specific resource name is provided.                                                 |
 
-In this iteration, your script should
+In this iteration, your solution should
 
-* Find _up to 25 cities_ that fuzzy-match the `like` parameter
-* If `latitude` and `longitude` are specified, should find the 'closest' matches to this location
-* Whether or not `latitude` and `longitude` are provided, should display a 'relevance score', between 0.00 and 1.00 (inclusive) up to two places of decimal (two places always), based on some assessment of the results in a new `score` field in the results
+* Present _up to 25 cities_ that fuzzy-match the `like` parameter.
+* If `latitude` and `longitude` are specified, should find the 'closest' matches to this location.
+* Whether or not `latitude` and `longitude` are provided, should display a 'relevance score', between 0.00 and 1.00 (inclusive) up to two places of decimal (two places always), based on some assessment of the results in a new `score` field in the results.
 
 Relevance (the `score` field) is a function of a minimum of one or a maximum of two factors:
 
-1. The search term's 'closeness' to an actual city's name and
-2. Its location as determined by its proximity to the supplied `latitude` and `longitude` query params (if provided.)
+1. The search term's **similarity** to an actual city's name and
+2. Its location as determined by its **proximity** to the supplied `latitude` and `longitude` query params (if provided.)
 
-That's the definition. How you _determine_ a scoring algorithm is up to you. Be prepared to explain it. Doesn't have to be too fancy :)
+That's the definition. How you weight them and determine a scoring algorithm is up to you. Be prepared to explain it. Doesn't have to be super fancy :)
 
-Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago.
+Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago. This is a decent balance between proximity and similarity (at least I think so... prove me wrong!)
 
 ```
 GET /cities?like=des&latitude=41.85003&longitude=-87.65005
