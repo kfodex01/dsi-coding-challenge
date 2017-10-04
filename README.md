@@ -89,7 +89,7 @@ GET /cities?like=Des Moines
 
 should yield this
 
-```json
+```
 {
   "cities": [
     {
