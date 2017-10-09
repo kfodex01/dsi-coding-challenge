@@ -1,22 +1,26 @@
-Pioneer Coding Challenge
-========================
+DSI Coding Challenge
+====================
 
-Thank you for considering Pioneer! This challenge is meant to be the next step in our interview process, after the phone screen you just passed (yay!) It will hopefully offer you a chance to showcase your skills and experience before the scheduled in-person interview where we'll ask you quite a few things about your solutions, in addition to the usual interview-y things. Bring your laptop!
+Thank you for considering Pioneer! This challenge will hopefully offer you a chance to demonstrate your skills and experience before the phone screen and scheduled in-person interview where we'll ask you quite a few things about your solutions, in addition to the usual interview-y things. If you're invited to an in-person interview, please bring your laptop!
 
-Please fork this repo and place your solutions, as a single repo, in your GitHub account. [Provide us](TODO:add_email) a link when you're done.
+We hope that the requirements are clear but please [email us](mailto:mailto:nikhil.anand@pioneer.com) in case you need any clarification.
 
-We hope that the requirements are clear but please [email us](TODO:add_email) in case you need any clarification.
+Before you get started
+----------------------
+
+* The challenge consists of five parts. We'll tell you which parts to finish at a minimum, but feel free to complete all five.
+* Unless asked to, implement your solutions in whatever you're comfortable with. If we're looking for something specific (e.g. Python, C#, Java, AngularJS, React, Postgres, AWS, whatever) we'll let you know.
+* Please fork this repo and place your solutions, as a single repo, in your GitHub account. [Provide us](mailto:nikhil.anand@pioneer.com) a link when you're done.
+* How you organize your solutions in your repo is up to you. Use it as a chance to demonstrate your VCS experience and hygiene.
 
 Requirements
 ------------
 
-At a bare minimum, we'd like to see you to complete the first three parts but please work through the remaining as time and comfort permit.
+You'll be designing a RESTful API that allows its clients to search through the datafile `data/canada_usa_cities.tsv` in this repository which contains a big list of cities in the United States and Canada. All parts entail a single-endpoint exposed at `/cities`.  It should return _at most_ 25 matches based on simple search criteria. Content-type should be `application/json` with the appropriate HTTP status code.
 
-You'll be designing a RESTful API that allows its clients to search through the datafile at `data/canada_usa_cities.tsv` in this repository which contains a big list of cities in the United States and Canada. All parts entail a single-endpoint exposed at `/cities`.  It should return _at most_ 25 matches based on simple search criteria. Content-type should be `application/json` with the appropriate HTTP status code. Your assessment of a malformed request and how you handle other edge/test/unusual-cases is entirely up to you.
+All requirements are provided as a bare minimum. Feel free to fill in (and document) anything missing. How you handle any edge/test/unusual cases that aren't specified here is entirely up to you.
 
 ### Part One - Simplicity Itself
-
-Save your solution in a folder named `part_one` in your repo.
 
 Your API _only_ searches for _exact_ matches under the `name` field in the datafile.
 
@@ -73,46 +77,13 @@ should yield this
     "デモイン",
     "德梅因",
     "디모인"
-  ]
+  ],
+  "latitude": 41.60054,
+  "longitude": -93.60911
 }
 ```
-
-Again: How you handle cities _not_ in the dataset is up to you. How you handle requests to the bare collection `cities` is up to you.
 
 ### Part Two - Getting Fuzzy
-
-Save your solution in a folder named `part_two` in your repo.
-
-```
-GET /cities?like=Des Moines
-```
-
-should yield this
-
-```
-{
-  "cities": [
-    {
-      "city": "Des Moines",
-      "state": "IA",
-      "country": "US",
-      "alternate_names": List[<String>] // List of alternate names from Part One
-    },
-    {
-      "city": "West Des Moines",
-      "state": "IA",
-      "country": "US",
-      "alternate_names": List[<String>]
-    }
-  ]
-}
-```
-
-### Part Three - Where _are_ we?
-
-You should know how and where to save this in your repo.
-
-This
 
 ```
 GET /cities?like=Des Moines
@@ -128,8 +99,8 @@ should yield this
       "state": "IA",
       "country": "US",
       "latitude": 41.60054,
-      "longitude": -93.60911,
-      "alternate_names": List[<String>]
+      "longitude": -93.60911
+      "alternate_names": List[<String>] // List of alternate names from Part One,
     },
     {
       "city": "West Des Moines",
@@ -143,7 +114,9 @@ should yield this
 }
 ```
 
-### Part Four - Where things get interesting
+Hint: this doesn't _have_ to be a boring substring match like shown above...
+
+### Part Three - Where things get interesting
 
 Here are all the query params that your endpoint should accept. Feel free to add any you think are missing.
 
@@ -161,12 +134,12 @@ In this iteration, your solution should
 
 Relevance (the `score` field) is a function of a minimum of one or a maximum of two factors:
 
-1. The search term's **similarity** to an actual city's name and
+1. The search term's **similarity** to an actual city's name (hint: how could you quantify this?) and
 2. Its location as determined by its **proximity** to the supplied `latitude` and `longitude` query params (if provided.)
 
 That's the definition. How you weight them and determine a scoring algorithm is up to you. Be prepared to explain it. Doesn't have to be super fancy :)
 
-Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago. Here's a sample result with a decent balance between proximity and similarity (or at least I think so... do better and explain your work!)
+Here's an example **which is just for guidance** since your algorithm will most certainly yield different `score`s. Let's say I'm looking for all cities with "des" in their name that are close to Chicago. Here's a sample result
 
 ```
 GET /cities?like=des&latitude=41.85003&longitude=-87.65005
@@ -255,11 +228,11 @@ should yield something like
 
 Note: Results don't need to be sorted in order of relevance/`score` as shown above.
 
-### Part Five - Put a face on it
+### Part Four - Put a face on it
 
 Design a web-interface that interrogates your API and displays, _as you type_, the city suggestions on a map using the Google Maps API. Use any appropriate framework or library that makes your task easier. Be prepared to be asked about your choice of framework (if applicable) and build workflow regardless of your choice.
 
-### Part Six - Take it to the Cloud!
+### Part Five - Take it to the Cloud!
 
 Deploy your solution to a _public service or server_. We like AWS and would prefer seeing your solution there (you can use the free-tier.) However, Heroku, Google Cloud, Azure, Linode, your own server, are all acceptable. Be prepared to explain your deployment process.
 
@@ -267,26 +240,21 @@ Deploy your solution to a _public service or server_. We like AWS and would pref
 
 Have improvements to the requirements listed so far? Go ahead and implement them. Go bonkers. We'd _love_ to see any new features you can think of. Make sure you talk about them during the interview!
 
-Other Notes
------------
+What We Value
+-------------
 
-### Technologies
-
-You'll note that we haven't specified any particular language or associated framework for this challange. Unless asked to, implement your solutions in whatever you're comfortable with. If we're looking for something specific (e.g. Python, C#, Java, AngularJS, React, Postgres, AWS, whatever) we'll let you know beforehand.
-
-### What We Value
-
-Nothing left field here. Like every other software shop, we love good
+We value simplicity, readability/maintainability, and testability so there's nothing left-field here. Like every other software shop, we love good
 
 * Documentation
 * Syntax
 * Tests
 * VCS practices
 * Packaging and deployment practices
-* Your own creativity/secret sauce
 
-We value simplicity, readability/maintainability, and testability. We also understand that 'elegant' solutions might not be optimal and vice-versa. Whatever you do, please be prepared to explain your design choices and accept and offer critique gracefully and with respect. We're all in this to learn and become better.
+We value our developers' creativity. We understand that 'elegant' solutions might not be optimal and vice-versa.
 
-Ultimately, we're a research company that is very interested in _how you think about data_ and how you're able to _unleash its utility to solve our problems_ with your creativity and skillset.
+Whatever you do, please be prepared to explain your design choices and accept and offer critique gracefully and with respect. We're all in this to learn and become better.
+
+Ultimately, we're a research company that is very interested in _how you think about data_ and how you're able to unleash its utility to solve our problems with your creativity and skillset.
 
 Good luck, and thank you for your time! Code away!
