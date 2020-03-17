@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="name">Partial City Name</label>
+        <input type="text" class="form-control" id="likeCity" required [(ngModel)]="likeCity" name="likeCity">
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+<div *ngIf="geoName && !geoName[0].city">
+    {{inputLikeCity}} not found.
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="geoName && geoName[0].city">
+    <thead>
+        <tr>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            <th>Alternative Names</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let thisGeoName of geoName">
+            <td>{{ thisGeoName.city }}</td>
+            <td>{{ thisGeoName.state }}</td>
+            <td>{{ thisGeoName.country }}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let name of thisGeoName.alternateNames">
+                        {{name}}
+                    </li>
+                </ul>
+            </td>
+            <td>{{ thisGeoName.latitude }}</td>
+            <td>{{ thisGeoName.longitude }}</td>
+        </tr>
+    </tbody>
+</table>

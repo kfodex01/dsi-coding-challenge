@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { GetCitiesComponent } from './get-cities/get-cities.component';
+import { LikeCitiesComponent } from './like-cities/like-cities.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    GetCitiesComponent
+    GetCitiesComponent,
+    LikeCitiesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -22,7 +24,8 @@ import { GetCitiesComponent } from './get-cities/get-cities.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'get-city', component: GetCitiesComponent }
+      { path: 'get-city', component: GetCitiesComponent },
+      { path: 'like-city', component: LikeCitiesComponent }
     ])
   ],
   providers: [],
