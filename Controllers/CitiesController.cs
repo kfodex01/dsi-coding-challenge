@@ -10,13 +10,13 @@ namespace dsi_coding_challenge.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CityController : ControllerBase
+    public class CitiesController : ControllerBase
     {
 
-        private readonly ILogger<CityController> _logger;
+        private readonly ILogger<CitiesController> _logger;
         private Dictionary<string, List<GeoName>> byName = new Dictionary<string, List<GeoName>>();
 
-        public CityController(ILogger<CityController> logger)
+        public CitiesController(ILogger<CitiesController> logger)
         {
             _logger = logger;
             using (StreamReader streamReader = new StreamReader("data/canada_usa_cities.tsv"))
@@ -54,11 +54,11 @@ namespace dsi_coding_challenge.Controllers
             }
         }
 
-        [HttpGet]
-        public GeoName Get()
+        [HttpGet("{city}")]
+        public GeoName Get(string city)
         {
             List<GeoName> result;
-            byName.TryGetValue("Des Moines", out result);
+            byName.TryGetValue(city, out result);
 
             return result.First();
         }

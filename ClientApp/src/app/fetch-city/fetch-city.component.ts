@@ -9,7 +9,7 @@ export class FetchCityComponent {
   public geoName: GeoName;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<GeoName>(baseUrl + 'city').subscribe(result => {
+    http.get<GeoName>(baseUrl + 'cities/Des Moines').subscribe(result => {
       this.geoName = result;
       console.log(result);
     }, error => console.error(error));
