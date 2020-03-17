@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="name">City</label>
+        <input type="text" class="form-control" id="city" required [(ngModel)]="city" name="city">
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+<div *ngIf="geoName && !geoName.city">
+    {{inputCity}} not found.
+</div>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="geoName && geoName.city">
+    <thead>
+        <tr>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            <th>Alternative Names</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ geoName.city }}</td>
+            <td>{{ geoName.state }}</td>
+            <td>{{ geoName.country }}</td>
+            <td>
+                <ul>
+                    <li *ngFor="let name of geoName.alternativeNames">
+                        {{name}}
+                    </li>
+                </ul>
+            </td>
+            <td>{{ geoName.latitude }}</td>
+            <td>{{ geoName.longitude }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -60,7 +60,32 @@ namespace dsi_coding_challenge.Controllers
             List<GeoName> result;
             byName.TryGetValue(city, out result);
 
-            return result.First();
+            if (result != null)
+            {
+                return result.First();
+            }
+            return new GeoName();
+        }
+
+        [HttpGet("")]
+        public GeoName[] GetLike(string like)
+        {
+            List<GeoName> result = new List<GeoName>();
+            foreach(string key in byName.Keys)
+            {
+                if (key.Contains(like))
+                {
+                    List<GeoName> thisGeoNameList;
+                    byName.TryGetValue(key, out thisGeoNameList);
+                    result.AddRange(thisGeoNameList);
+
+                }
+                if (result.Count() >= 25)
+                {
+                    break;
+                }
+            }
+            return result.ToArray();
         }
     }
 }
