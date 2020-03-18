@@ -1,14 +1,62 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
+<h1>Coding Challenge</h1>
+<p>Welcome to this single-page application, built with:</p>
 <ul>
   <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
   <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
   <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
 </ul>
-<p>To help you get started, we've also set up:</p>
+<p>In addition to this home screen, this application contains four test pages:</p>
 <ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
+    <li><strong>Get First City By Name</strong>: This form allows the user to find a city by the exact name. It will only
+    return one result even if there is more than one city by that name. For instance, Des Moines has two instances in the
+    table, but only the first is displayed (in keeping with the expected return in part one of the challenge):
+        <ul>
+            <li>Des Moines, IA</li>
+        </ul>
+    </li>
+    <li><strong>Search First City Like...</strong>: This form allows the user to find a city by a piece of their name
+        (case sensitive). It also allows the user to input latitude and longitude, which will change the match score along
+        with the closeness of the match. However, for every instance where there are multiple cities with the exact same
+        name, only the first instance is returned. For instance, Des Moines has two instances and West Des Moines has one,
+        but the first from each is displayed (in keeping with the expected return in part one of the challenge):
+        <ul>
+            <li>Des Moines, IA</li>
+            <li>West Des Moines, IA</li>
+        </ul>
+    </li>
+    <li><strong>Get All Cities By Name</strong>: This form allows the user to find a city by the exact name. In the case
+        where multiple cities have the same name, all results are displayed. For instance, Des Moines has two instances:
+        <ul>
+            <li>Des Moines, IA</li>
+            <li>Des Moines, WA</li>
+        </ul>
+    </li>
+    <li><strong>Search City Like...</strong>: This form allows the user to find a city by a piece of their name
+        (case sensitive). It also allows the user to input latitude and longitude, which will change the match score along
+        with the closeness of the match. For instance, Des Moines has two instances and West Des Moines has one. All are
+        displayed:
+        <ul>
+            <li>Des Moines, IA</li>
+            <li>Des Moines, WA</li>
+            <li>West Des Moines, IA</li>
+        </ul>
+    </li>
 </ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<p>Each of these pages uses an endpoint in the backend, which can be hit directly:</p>
+<ul>
+    <li><strong>https://localhost:5001/cities:</strong> returns one city for each city name
+    <ul>
+        <li>eg: "/Des Moines" returns Des Moines, IA</li>
+        <li>eg: "?like=Des Moines" returns Des Moines, IA and West Des Moines, IA</li>
+        <li>Other parameters include latitude and longitude, which will adjust the match score when used together</li>
+    </ul>
+</li>
+    <li><strong>https://localhost:5001/all-cities:</strong> returns all cities for each city name (this is not RESTful,
+        but my impression is that if this was a production environment, this endpoint would replace the previous one)
+        <ul>
+            <li>eg: "/Des Moines" returns Des Moines, IA and Des Moines, WA</li>
+            <li>eg: "?like=Des Moines" returns Des Moines, IA, Des Moines, WA, and West Des Moines, IA</li>
+            <li>Other parameters include latitude and longitude, which will adjust the match score when used together</li>
+        </ul>
+    </li>
+</ul>
