@@ -20,43 +20,7 @@ namespace dsi_coding_challenge.Controllers
         public CitiesController(ILogger<CitiesController> logger)
         {
             _logger = logger;
-            using (StreamReader streamReader = new StreamReader("data/canada_usa_cities.tsv"))
-            using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
-            {
-                csvReader.Configuration.Delimiter = "\t";
-                csvReader.Configuration.HasHeaderRecord = true;
-                csvReader.Configuration.BadDataFound = null;
-                csvReader.Read();
-                csvReader.ReadHeader();
-                while (csvReader.Read())
-                {
-                    GeoName thisGeoName = new GeoName {
-                        City = csvReader.GetField<string>("name"),
-                        State = csvReader.GetField<string>("admin1"),
-                        Country = csvReader.GetField<string>("country"),
-                        AlternateNames = csvReader.GetField<string>("alt_name").Split(','),
-                        Latitude = csvReader.GetField<double>("lat"),
-                        Longitude = csvReader.GetField<double>("long")
-                    };
-                    if (thisGeoName.AlternateNames[0] == "")
-                    {
-                        thisGeoName.AlternateNames = Array.Empty<string>();
-                    }
-                    List<GeoName> thisList;
-                    if (byName.ContainsKey(thisGeoName.City))
-                    {
-                        byName.TryGetValue(thisGeoName.City, out thisList);
-                        thisList.Add(thisGeoName);
-                    } else
-                    {
-                        thisList = new List<GeoName>
-                        {
-                            thisGeoName
-                        };
-                        byName.Add(thisGeoName.City, thisList);
-                    }
-                }
-            }
+            readCsv();
         }
 
         [HttpGet("{city}")]
@@ -85,12 +49,9 @@ namespace dsi_coding_challenge.Controllers
                     result.Add(thisGeoNameList.First());
 
                 }
-                if (result.Count() >= 25)
-                {
-                    break;
-                }
             }
-            return result.ToArray();
+
+            return TruncateList(result);
         }
 
         // I realize that this doesn't make a RESTful controller, but I wanted to make sure that it was clear that I understand there are more results that what is expected in the README
@@ -121,11 +82,64 @@ namespace dsi_coding_challenge.Controllers
                     result.AddRange(thisGeoNameList);
 
                 }
-                if (result.Count() >= 25)
+            }
+
+            return TruncateList(result);
+        }
+
+        private void readCsv()
+        {
+            using (StreamReader streamReader = new StreamReader("data/canada_usa_cities.tsv"))
+            using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
+            {
+                csvReader.Configuration.Delimiter = "\t";
+                csvReader.Configuration.HasHeaderRecord = true;
+                csvReader.Configuration.BadDataFound = null;
+                csvReader.Read();
+                csvReader.ReadHeader();
+                while (csvReader.Read())
                 {
-                    break;
+                    GeoName thisGeoName = new GeoName
+                    {
+                        City = csvReader.GetField<string>("name"),
+                        State = csvReader.GetField<string>("admin1"),
+                        Country = csvReader.GetField<string>("country"),
+                        AlternateNames = csvReader.GetField<string>("alt_name").Split(','),
+                        Latitude = csvReader.GetField<double>("lat"),
+                        Longitude = csvReader.GetField<double>("long")
+                    };
+                    if (thisGeoName.AlternateNames[0] == "")
+                    {
+                        thisGeoName.AlternateNames = Array.Empty<string>();
+                    }
+                    List<GeoName> thisList;
+                    if (byName.ContainsKey(thisGeoName.City))
+                    {
+                        byName.TryGetValue(thisGeoName.City, out thisList);
+                        thisList.Add(thisGeoName);
+                    }
+                    else
+                    {
+                        thisList = new List<GeoName>
+                        {
+                            thisGeoName
+                        };
+                        byName.Add(thisGeoName.City, thisList);
+                    }
                 }
             }
+        }
+
+        private GeoName[] TruncateList(List<GeoName> geoNames)
+        {
+            if (geoNames.Count < 25)
+            {
+                return geoNames.ToArray();
+            }
+
+            List<GeoName> result = new List<GeoName>();
+            result.AddRange(geoNames.GetRange(0, 25));
+
             return result.ToArray();
         }
     }
