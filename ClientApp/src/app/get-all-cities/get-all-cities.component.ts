@@ -2,15 +2,15 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'like-cities',
-  templateUrl: './like-cities.component.html'
+  selector: 'get-all-cities',
+  templateUrl: './get-all-cities.component.html'
 })
-export class LikeCitiesComponent {
+export class GetAllCitiesComponent {
   public geoName: GeoName[];
   public baseUrl: string;
   public http: HttpClient;
-  public likeCity: string = '';
-  public inputLikeCity: string = '';
+  public city: string = '';
+  public inputCity: string = '';
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -18,12 +18,12 @@ export class LikeCitiesComponent {
   }
 
   onSubmit() {
-    if (this.likeCity == '') {
+    if (this.city == '') {
       return;
     }
-    this.http.get<GeoName[]>(this.baseUrl + 'cities?like=' + this.likeCity).subscribe(result => {
+    this.http.get<GeoName[]>(this.baseUrl + 'all-cities/' + this.city).subscribe(result => {
       this.geoName = result;
-      this.inputLikeCity = this.likeCity;
+      this.inputCity = this.city;
     }, error => console.error(error));
   }
 }

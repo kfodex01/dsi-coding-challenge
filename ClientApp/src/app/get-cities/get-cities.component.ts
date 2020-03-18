@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-fetch-data',
+  selector: 'get-cities',
   templateUrl: './get-cities.component.html'
 })
 export class GetCitiesComponent {
@@ -24,7 +24,6 @@ export class GetCitiesComponent {
     this.http.get<GeoName>(this.baseUrl + 'cities/' + this.city).subscribe(result => {
       this.geoName = result;
       this.inputCity = this.city;
-      console.log(result);
     }, error => console.error(error));
   }
 }

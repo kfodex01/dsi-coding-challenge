@@ -9,6 +9,8 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { GetCitiesComponent } from './get-cities/get-cities.component';
 import { LikeCitiesComponent } from './like-cities/like-cities.component';
+import { GetAllCitiesComponent } from './get-all-cities/get-all-cities.component';
+import { LikeAllCitiesComponent } from './like-all-cities/like-all-cities.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LikeCitiesComponent } from './like-cities/like-cities.component';
     NavMenuComponent,
     HomeComponent,
     GetCitiesComponent,
-    LikeCitiesComponent
+    LikeCitiesComponent,
+    GetAllCitiesComponent,
+    LikeAllCitiesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -25,7 +29,9 @@ import { LikeCitiesComponent } from './like-cities/like-cities.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'get-city', component: GetCitiesComponent },
-      { path: 'like-city', component: LikeCitiesComponent }
+      { path: 'like-city', component: LikeCitiesComponent },
+      { path: 'get-all-cities', component: GetAllCitiesComponent },
+      { path: 'like-all-cities', component: LikeAllCitiesComponent }
     ])
   ],
   providers: [],

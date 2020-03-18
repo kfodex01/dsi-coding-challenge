@@ -1,14 +1,14 @@
 <form (ngSubmit)="onSubmit()">
     <div class="form-group">
-        <label for="name">Partial City Name</label>
-        <input type="text" class="form-control" id="likeCity" required [(ngModel)]="likeCity" name="likeCity">
+        <label for="name">City</label>
+        <input type="text" class="form-control" id="city" required [(ngModel)]="city" name="city">
     </div>
 
     <button type="submit" class="btn btn-success">Submit</button>
 
 </form>
 <div *ngIf="geoName && geoName.length === 0">
-    {{inputLikeCity}} not found.
+    {{inputCity}} not found.
 </div>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="geoName && geoName.length !== 0">

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CsvHelper;
 using System.Globalization;
+using System;
 
 namespace dsi_coding_challenge.Controllers
 {
@@ -37,6 +38,10 @@ namespace dsi_coding_challenge.Controllers
                         Latitude = csvReader.GetField<double>("lat"),
                         Longitude = csvReader.GetField<double>("long")
                     };
+                    if (thisGeoName.AlternateNames[0] == "")
+                    {
+                        thisGeoName.AlternateNames = Array.Empty<string>();
+                    }
                     List<GeoName> thisList;
                     if (byName.ContainsKey(thisGeoName.City))
                     {
@@ -55,7 +60,7 @@ namespace dsi_coding_challenge.Controllers
         }
 
         [HttpGet("{city}")]
-        public GeoName Get(string city)
+        public GeoName GetFirst(string city)
         {
             List<GeoName> result;
             byName.TryGetValue(city, out result);
@@ -68,10 +73,46 @@ namespace dsi_coding_challenge.Controllers
         }
 
         [HttpGet("")]
-        public GeoName[] GetLike(string like)
+        public GeoName[] GetFirstLike(string like)
         {
             List<GeoName> result = new List<GeoName>();
             foreach(string key in byName.Keys)
+            {
+                if (key.Contains(like))
+                {
+                    List<GeoName> thisGeoNameList;
+                    byName.TryGetValue(key, out thisGeoNameList);
+                    result.Add(thisGeoNameList.First());
+
+                }
+                if (result.Count() >= 25)
+                {
+                    break;
+                }
+            }
+            return result.ToArray();
+        }
+
+        // I realize that this doesn't make a RESTful controller, but I wanted to make sure that it was clear that I understand there are more results that what is expected in the README
+        [HttpGet("/all-cities/{city}")]
+        public GeoName[] Get(string city)
+        {
+            List<GeoName> result;
+            byName.TryGetValue(city, out result);
+
+            if (result != null)
+            {
+                return result.ToArray();
+            }
+            return Array.Empty<GeoName>();
+        }
+
+        // I realize that this doesn't make a RESTful controller, but I wanted to make sure that it was clear that I understand there are more results that what is expected in the README
+        [HttpGet("/all-cities")]
+        public GeoName[] GetLike(string like)
+        {
+            List<GeoName> result = new List<GeoName>();
+            foreach (string key in byName.Keys)
             {
                 if (key.Contains(like))
                 {
