@@ -7,16 +7,20 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { GetCitiesComponent } from './get-cities/get-cities.component';
+import { LikeCitiesComponent } from './like-cities/like-cities.component';
+import { GetAllCitiesComponent } from './get-all-cities/get-all-cities.component';
+import { LikeAllCitiesComponent } from './like-all-cities/like-all-cities.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    GetCitiesComponent,
+    LikeCitiesComponent,
+    GetAllCitiesComponent,
+    LikeAllCitiesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,8 +28,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'get-city', component: GetCitiesComponent },
+      { path: 'like-city', component: LikeCitiesComponent },
+      { path: 'get-all-cities', component: GetAllCitiesComponent },
+      { path: 'like-all-cities', component: LikeAllCitiesComponent }
     ])
   ],
   providers: [],
