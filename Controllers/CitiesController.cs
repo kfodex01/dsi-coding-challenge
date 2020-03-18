@@ -159,8 +159,8 @@ namespace dsi_coding_challenge.Controllers
                 double latDiff = geoName.Latitude - (double)latitude;
                 double longDiff = geoName.Longitude - (double)longitude;
                 double distance = Math.Sqrt(Math.Pow(latDiff, 2) + Math.Pow(longDiff, 2));
-                distance = Math.Min(400.0, distance);
-                coordScore = 1.0 - (distance / 400.0);
+                distance = Math.Min(255.0, distance);
+                coordScore = 1.0 - (distance / 255.0);
             } else
             {
                 coordScore = matchScore;
