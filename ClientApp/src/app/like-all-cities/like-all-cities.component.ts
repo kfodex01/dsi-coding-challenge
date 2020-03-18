@@ -11,6 +11,8 @@ export class LikeAllCitiesComponent {
   public http: HttpClient;
   public likeCity: string = '';
   public inputLikeCity: string = '';
+  public latitude: number;
+  public longitude: number;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -18,10 +20,15 @@ export class LikeAllCitiesComponent {
   }
 
   onSubmit() {
-    if (this.likeCity == '') {
-      return;
-    }
-    this.http.get<GeoName[]>(this.baseUrl + 'all-cities?like=' + this.likeCity).subscribe(result => {
+    var latLongQuery: string = '';
+    if (this.latitude) {
+      latLongQuery = '&latitude=' + this.latitude;
+    };
+    if (this.longitude) {
+      latLongQuery = latLongQuery + '&longitude=' + this.longitude;
+    };
+
+    this.http.get<GeoName[]>(this.baseUrl + 'all-cities?like=' + this.likeCity + latLongQuery).subscribe(result => {
       this.geoName = result;
       this.inputLikeCity = this.likeCity;
     }, error => console.error(error));
@@ -35,4 +42,5 @@ interface GeoName {
   alternativeNames: string[];
   latitude: number;
   longitude: number;
+  score: number;
 }

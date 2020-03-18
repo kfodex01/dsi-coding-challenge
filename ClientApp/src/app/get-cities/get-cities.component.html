@@ -1,10 +1,10 @@
-<form (ngSubmit)="onSubmit()">
+<form #query="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-        <label for="name">City</label>
+        <label for="city">City *</label>
         <input type="text" class="form-control" id="city" required [(ngModel)]="city" name="city">
     </div>
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!query.form.valid">Submit</button>
 
 </form>
 <div *ngIf="geoName && !geoName.city">

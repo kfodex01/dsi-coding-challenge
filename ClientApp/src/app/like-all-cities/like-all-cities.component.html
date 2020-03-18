@@ -1,10 +1,14 @@
-<form (ngSubmit)="onSubmit()">
+<form #query="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-        <label for="name">Partial City Name</label>
+        <label for="likeCity">Partial City Name *</label>
         <input type="text" class="form-control" id="likeCity" required [(ngModel)]="likeCity" name="likeCity">
+        <label for="latitude">Latitude</label>
+        <input type="number" class="form-control" id="latitude" [(ngModel)]="latitude" name="latitude">
+        <label for="longitude">Longitude</label>
+        <input type="number" class="form-control" id="longitude" [(ngModel)]="longitude" name="longitude">
     </div>
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!query.form.valid">Submit</button>
 
 </form>
 <div *ngIf="geoName && geoName.length === 0">
@@ -20,6 +24,7 @@
             <th>Alternative Names</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            <th>Score</th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +41,7 @@
             </td>
             <td>{{ thisGeoName.latitude }}</td>
             <td>{{ thisGeoName.longitude }}</td>
+            <td>{{ thisGeoName.score }}</td>
         </tr>
     </tbody>
 </table>

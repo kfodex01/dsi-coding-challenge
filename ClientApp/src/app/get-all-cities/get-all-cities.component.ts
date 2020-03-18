@@ -18,9 +18,6 @@ export class GetAllCitiesComponent {
   }
 
   onSubmit() {
-    if (this.city == '') {
-      return;
-    }
     this.http.get<GeoName[]>(this.baseUrl + 'all-cities/' + this.city).subscribe(result => {
       this.geoName = result;
       this.inputCity = this.city;

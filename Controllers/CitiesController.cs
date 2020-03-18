@@ -37,7 +37,7 @@ namespace dsi_coding_challenge.Controllers
         }
 
         [HttpGet("")]
-        public GeoName[] GetFirstLike(string like)
+        public GeoName[] GetFirstLike(string like, double? latitude, double? longitude)
         {
             List<GeoName> result = new List<GeoName>();
             foreach(string key in byName.Keys)
@@ -46,12 +46,13 @@ namespace dsi_coding_challenge.Controllers
                 {
                     List<GeoName> thisGeoNameList;
                     byName.TryGetValue(key, out thisGeoNameList);
-                    result.Add(thisGeoNameList.First());
-
+                    GeoName thisGeoName = thisGeoNameList.First();
+                    CalculateScore(thisGeoName, key, like, latitude, longitude);
+                    result.Add(thisGeoName);
                 }
             }
 
-            return TruncateList(result);
+            return OrderAndTruncateList(result);
         }
 
         // I realize that this doesn't make a RESTful controller, but I wanted to make sure that it was clear that I understand there are more results that what is expected in the README
@@ -70,7 +71,7 @@ namespace dsi_coding_challenge.Controllers
 
         // I realize that this doesn't make a RESTful controller, but I wanted to make sure that it was clear that I understand there are more results that what is expected in the README
         [HttpGet("/all-cities")]
-        public GeoName[] GetLike(string like)
+        public GeoName[] GetLike(string like, double? latitude, double? longitude)
         {
             List<GeoName> result = new List<GeoName>();
             foreach (string key in byName.Keys)
@@ -79,12 +80,16 @@ namespace dsi_coding_challenge.Controllers
                 {
                     List<GeoName> thisGeoNameList;
                     byName.TryGetValue(key, out thisGeoNameList);
+                    foreach (GeoName geoName in thisGeoNameList)
+                    {
+                        CalculateScore(geoName, key, like, latitude, longitude);
+                    }
                     result.AddRange(thisGeoNameList);
 
                 }
             }
 
-            return TruncateList(result);
+            return OrderAndTruncateList(result);
         }
 
         private void readCsv()
@@ -130,17 +135,39 @@ namespace dsi_coding_challenge.Controllers
             }
         }
 
-        private GeoName[] TruncateList(List<GeoName> geoNames)
+        private GeoName[] OrderAndTruncateList(List<GeoName> geoNamesList)
         {
-            if (geoNames.Count < 25)
+            List<GeoName> sortedList = geoNamesList.OrderByDescending(g => g.Score).ToList();
+            if (sortedList.Count < 25)
             {
-                return geoNames.ToArray();
+                return sortedList.ToArray();
             }
 
             List<GeoName> result = new List<GeoName>();
-            result.AddRange(geoNames.GetRange(0, 25));
+            result.AddRange(sortedList.GetRange(0, 25));
 
             return result.ToArray();
+        }
+
+        private void CalculateScore(GeoName geoName, string city, string like, double? latitude, double? longitude)
+        {
+            double matchScore = (double)like.Length / (double)city.Length;
+            double coordScore;
+
+            if (latitude != null && longitude != null)
+            {
+                double latDiff = geoName.Latitude - (double)latitude;
+                double longDiff = geoName.Longitude - (double)longitude;
+                double distance = Math.Sqrt(Math.Pow(latDiff, 2) + Math.Pow(longDiff, 2));
+                distance = Math.Min(400.0, distance);
+                coordScore = 1.0 - (distance / 400.0);
+            } else
+            {
+                coordScore = matchScore;
+            }
+
+            double avgScore = (matchScore + coordScore) / 2;
+            geoName.Score = Math.Round(avgScore, 2);
         }
     }
 }

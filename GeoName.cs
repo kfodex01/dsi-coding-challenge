@@ -14,5 +14,7 @@ namespace dsi_coding_challenge
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
+
+        public double Score { get; set; }
     }
 }
