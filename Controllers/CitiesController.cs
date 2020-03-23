@@ -1,11 +1,10 @@
-﻿using System.IO;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CsvHelper;
-using System.Globalization;
 using System;
+using dsi_coding_challenge.Utils;
 
 namespace dsi_coding_challenge.Controllers
 {
@@ -15,12 +14,12 @@ namespace dsi_coding_challenge.Controllers
     {
 
         private readonly ILogger<CitiesController> _logger;
-        private Dictionary<string, List<GeoName>> byName = new Dictionary<string, List<GeoName>>();
+        private Dictionary<string, List<GeoName>> byName;
 
         public CitiesController(ILogger<CitiesController> logger)
         {
             _logger = logger;
-            readCsv();
+            byName = DataUtil.readCsv();
         }
 
         [HttpGet("{city}")]
@@ -90,49 +89,6 @@ namespace dsi_coding_challenge.Controllers
             }
 
             return OrderAndTruncateList(result);
-        }
-
-        private void readCsv()
-        {
-            using (StreamReader streamReader = new StreamReader("data/canada_usa_cities.tsv"))
-            using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
-            {
-                csvReader.Configuration.Delimiter = "\t";
-                csvReader.Configuration.HasHeaderRecord = true;
-                csvReader.Configuration.BadDataFound = null;
-                csvReader.Read();
-                csvReader.ReadHeader();
-                while (csvReader.Read())
-                {
-                    GeoName thisGeoName = new GeoName
-                    {
-                        City = csvReader.GetField<string>("name"),
-                        State = csvReader.GetField<string>("admin1"),
-                        Country = csvReader.GetField<string>("country"),
-                        AlternateNames = csvReader.GetField<string>("alt_name").Split(','),
-                        Latitude = csvReader.GetField<double>("lat"),
-                        Longitude = csvReader.GetField<double>("long")
-                    };
-                    if (thisGeoName.AlternateNames[0] == "")
-                    {
-                        thisGeoName.AlternateNames = Array.Empty<string>();
-                    }
-                    List<GeoName> thisList;
-                    if (byName.ContainsKey(thisGeoName.City))
-                    {
-                        byName.TryGetValue(thisGeoName.City, out thisList);
-                        thisList.Add(thisGeoName);
-                    }
-                    else
-                    {
-                        thisList = new List<GeoName>
-                        {
-                            thisGeoName
-                        };
-                        byName.Add(thisGeoName.City, thisList);
-                    }
-                }
-            }
         }
 
         private GeoName[] OrderAndTruncateList(List<GeoName> geoNamesList)
