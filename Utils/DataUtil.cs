@@ -6,11 +6,18 @@ using System.Collections.Generic;
 
 namespace dsi_coding_challenge.Utils
 {
-    public class DataUtil
+    public class DataUtil : IDataUtil
     {
-        public static Dictionary<string, List<GeoName>> readCsv()
+        private Dictionary<string, List<GeoName>> byName;
+
+        public Dictionary<string, List<GeoName>> GetData()
         {
-            Dictionary<string, List<GeoName>> byName = new Dictionary<string, List<GeoName>>();
+            return byName ?? ReadCsv();
+        }
+
+        private Dictionary<string, List<GeoName>> ReadCsv()
+        {
+            byName = new Dictionary<string, List<GeoName>>();
             using (StreamReader streamReader = new StreamReader("data/canada_usa_cities.tsv"))
             using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
             {

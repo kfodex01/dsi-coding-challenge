@@ -16,10 +16,10 @@ namespace dsi_coding_challenge.Controllers
         private readonly ILogger<CitiesController> _logger;
         private Dictionary<string, List<GeoName>> byName;
 
-        public CitiesController(ILogger<CitiesController> logger)
+        public CitiesController(ILogger<CitiesController> logger, IDataUtil dataUtil)
         {
             _logger = logger;
-            byName = DataUtil.readCsv();
+            byName = dataUtil.GetData();
         }
 
         [HttpGet("{city}")]
