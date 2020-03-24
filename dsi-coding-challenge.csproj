@@ -49,6 +49,7 @@
     <Folder Include="ClientApp\src\app\get-cities\" />
     <Folder Include="ClientApp\src\app\get-all-cities\" />
     <Folder Include="ClientApp\src\app\like-all-cities\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="DataStore\Resources\Resource.resx" />

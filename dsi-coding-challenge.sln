@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dsi-coding-challenge", "dsi-coding-challenge.csproj", "{1584DDAF-1A2D-49D9-80A7-05451EF2D93E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dsi-coding-challenge", "dsi-coding-challenge.csproj", "{2EDF4DA7-F747-4F11-BAAB-15CF0B9027A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +9,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1584DDAF-1A2D-49D9-80A7-05451EF2D93E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1584DDAF-1A2D-49D9-80A7-05451EF2D93E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1584DDAF-1A2D-49D9-80A7-05451EF2D93E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1584DDAF-1A2D-49D9-80A7-05451EF2D93E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EDF4DA7-F747-4F11-BAAB-15CF0B9027A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EDF4DA7-F747-4F11-BAAB-15CF0B9027A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EDF4DA7-F747-4F11-BAAB-15CF0B9027A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EDF4DA7-F747-4F11-BAAB-15CF0B9027A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

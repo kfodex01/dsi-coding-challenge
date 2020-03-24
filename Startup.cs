@@ -1,3 +1,4 @@
+using dsi_coding_challenge.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,7 @@ namespace dsi_coding_challenge
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSingleton<IDataUtil, DataUtil>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
